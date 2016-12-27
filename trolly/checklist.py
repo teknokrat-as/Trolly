@@ -13,7 +13,7 @@ class Checklist(trelloobject.TrelloObject):
         self.id = checklist_id
         self.name = name
 
-        self.base_uri = '/checklists/' + self.id
+        self.base_uri = '/checklists/' + str(self.id)
 
     def get_checklist_information(self, query_params=None):
         '''
@@ -98,11 +98,13 @@ class ChecklistItem(trelloobject.TrelloObject):
 
         self.idCard = card_id
         self.idChecklist = checklist_id
-        self.id = checklistitem_id
-        self.name = name
+        self.id = checklistitem_id.decode('utf-8')
+        self.name = name.decode('utf-8')
         self.state = (state == 'complete')
 
-        self.base_uri = '/cards/' + self.idCard + '/checklist/' + self.idChecklist + '/checkItem/' + self.id
+        self.base_uri = '/cards/{}/checklist/{}/checkItem/{}'.format(str(self.idCard),
+                                                                     str(self.idChecklist),
+                                                                     str(self.id))
 
 
     def update_name( self, name ):
