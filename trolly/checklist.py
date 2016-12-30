@@ -124,10 +124,11 @@ class ChecklistItem(trelloobject.TrelloObject):
         """
         Set the state of the current checklist item. Returns a new ChecklistItem object.
         """
+        self.state = state
         checklistitem_json = self.fetch_json(
             uri_path = self.base_uri + '/state',
             http_method = 'PUT',
-            query_params = {'value': 'complete' if state else 'incomplete'}
+            query_params = {'value': 'complete' if self.state else 'incomplete'}
         )
 
         return self.create_checklist_item(self.idCard, self.idChecklist, checklistitem_json)
